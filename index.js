@@ -1,6 +1,6 @@
 // === Constants ===
 const BASE = "https://fsa-crud-2aa9294fe819.herokuapp.com/api";
-const COHORT = ""; // Make sure to change this!
+const COHORT = "/2507-CAMERON"; // Make sure to change this!
 const API = BASE + COHORT;
 
 // === State ===
@@ -128,6 +128,24 @@ function GuestList() {
   return $ul;
 }
 
+// Party Form
+function partyForm() {
+  let $form = document.createElement("form");
+  $form.innerHTML = `
+    <label>Name</label>
+    <input></input>
+    <label>Description</label>
+    <input></input>
+    <label>Date</label>
+    <input></input>
+    <label>Location</label>
+    <input></input>
+    <button id="submit">Add Party</button>
+  `;
+
+  return $form;
+}
+
 // === Render ===
 function render() {
   const $app = document.querySelector("#app");
@@ -142,11 +160,16 @@ function render() {
         <h2>Party Details</h2>
         <SelectedParty></SelectedParty>
       </section>
+      <section id="form">
+        <h2>Submit New Party</h2>
+        <PartyForm></PartyForm>
+      </section>
     </main>
   `;
 
   $app.querySelector("PartyList").replaceWith(PartyList());
   $app.querySelector("SelectedParty").replaceWith(SelectedParty());
+  $app.querySelector("PartyForm").replaceWith(partyForm());
 }
 
 async function init() {
