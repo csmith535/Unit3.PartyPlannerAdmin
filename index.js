@@ -57,6 +57,26 @@ async function getGuests() {
   }
 }
 
+// POST request function
+async function newParty(party) {
+  try {
+    let response = await fetch(API + "/events", {
+      method: `POST`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(party),
+    });
+    if (response.ok) {
+      await getParties();
+    } else {
+      console.error("Failed To Add Party");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 // === Components ===
 
 /** Party name that shows more details about the party when clicked */
@@ -133,15 +153,31 @@ function partyForm() {
   let $form = document.createElement("form");
   $form.innerHTML = `
     <label>Name</label>
-    <input></input>
+    <input type="text", name="name"></input>
     <label>Description</label>
-    <input></input>
+    <input type="text", name="description"></input>
     <label>Date</label>
-    <input></input>
+    <input type="date", name="date"></input>
     <label>Location</label>
-    <input></input>
+    <input type="text", name="location"></input>
     <button id="submit">Add Party</button>
   `;
+
+  // Add event listener to form submit
+  $form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    let isoDate = new Date($form.date.value).toISOString();
+
+    let party = {
+      name: $form.name.valueOf,
+      description: $form.description.valueOf,
+      date: isoDate,
+      location: $form.location.valueOf,
+    };
+    await newParty(party);
+    $form.reset();
+  });
 
   return $form;
 }
