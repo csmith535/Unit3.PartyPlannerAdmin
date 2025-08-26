@@ -169,13 +169,14 @@ function partyForm() {
 
     let isoDate = new Date($form.date.value).toISOString();
 
-    let party = {
-      name: $form.name.valueOf,
-      description: $form.description.valueOf,
+    let $party = {
+      name: $form.name.value,
+      description: $form.description.value,
       date: isoDate,
-      location: $form.location.valueOf,
+      location: $form.location.value,
     };
-    await newParty(party);
+    // console.log($party);
+    await newParty($party);
     $form.reset();
   });
 
